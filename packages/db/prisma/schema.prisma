@@ -10,15 +10,13 @@ datasource db {
 model User {
   id                 String    @id @default(uuid())
   githubUsername     String    @unique
-  email              String    @unique
   password           String
-  userPrs            UserPR[]
+  userPr            UserPR[]
 }
 
 model Admin {
   id                String @id @default(uuid())
-  username          String @unique
-  email             String @unique
+  githubUsername    String @unique
   password          String
   repos             Repos[]
 }
