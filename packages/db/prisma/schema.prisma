@@ -8,15 +8,21 @@ datasource db {
 }
 
 model User {
-  id                 String    @id @default(uuid())
-  githubUsername     String    @unique
-  password           String
+  id                String    @id @default(uuid())
+  firstname         String   
+  lastname          String
+  username          String    @unique
+  email             String    @unique
+  password          String
   userPr            UserPR[]
 }
 
 model Admin {
   id                String @id @default(uuid())
-  githubUsername    String @unique
+  firstname         String   
+  lastname          String
+  username          String    @unique
+  email             String    @unique
   password          String
   repos             Repos[]
 }

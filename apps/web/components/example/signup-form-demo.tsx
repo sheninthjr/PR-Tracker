@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import { cn } from '@/lib/utils';
+import axios from 'axios';
+import { BACKEND_URL } from '@/config';
 
 export function SignupForm({ type }: { type: 'Signup' | 'Signin' }) {
   const [username, setUsername] = useState<string>('');
@@ -10,9 +12,24 @@ export function SignupForm({ type }: { type: 'Signup' | 'Signin' }) {
   const [lastName, setLastName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log('Form submitted');
+    if (type === 'Signin') {
+      const response = await axios.post(`${BACKEND_URL}/admin/signin`, {
+        email: email,
+        password: password,
+      });
+    }
+    if (type === 'Signup') {
+      const response = await axios.post(`${BACKEND_URL}/admin/signup`, {
+        firstName,
+        lastName,
+        username,
+        email,
+        password,
+      });
+      alert(response);
+    }
   };
   return (
     <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
@@ -72,7 +89,7 @@ export function SignupForm({ type }: { type: 'Signup' | 'Signin' }) {
           />
         </LabelInputContainer>
         <button
-          className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
+          className="bg-black block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
           type="submit"
         >
           {type} &rarr;

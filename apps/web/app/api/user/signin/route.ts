@@ -5,7 +5,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   try {
     const body = await req.json();
     const { email, password } = body;
-    const user = await db.admin.findFirst({
+    const user = await db.user.findFirst({
       where: {
         email: email,
         password: password,
