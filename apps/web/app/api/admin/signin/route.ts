@@ -1,5 +1,6 @@
 import { type NextRequest, NextResponse } from 'next/server';
 import db from 'db';
+import bcrypt from 'bcrypt';
 
 export async function POST(req: NextRequest, res: NextResponse) {
   try {
@@ -8,10 +9,10 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const user = await db.admin.findFirst({
       where: {
         email: email,
-        password: password,
       },
     });
     if (user) {
+      const isPasswordValid = await bcrypt.compare(password, user.password);
       return NextResponse.json({ success: true, user });
     } else {
       return NextResponse.json(

@@ -8,8 +8,8 @@ import { BACKEND_URL } from '@/config';
 
 export function SignupForm({ type }: { type: 'Signup' | 'Signin' }) {
   const [username, setUsername] = useState<string>('');
-  const [firstName, setFirstName] = useState<string>('');
-  const [lastName, setLastName] = useState<string>('');
+  const [firstname, setFirstname] = useState<string>('');
+  const [lastname, setLastname] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -22,8 +22,8 @@ export function SignupForm({ type }: { type: 'Signup' | 'Signin' }) {
     }
     if (type === 'Signup') {
       const response = await axios.post(`${BACKEND_URL}/admin/signup`, {
-        firstName,
-        lastName,
+        firstname,
+        lastname,
         username,
         email,
         password,
@@ -46,7 +46,7 @@ export function SignupForm({ type }: { type: 'Signup' | 'Signin' }) {
                   id="firstname"
                   placeholder="Firstname"
                   type="text"
-                  onChange={(e) => setFirstName(e.target.value)}
+                  onChange={(e) => setFirstname(e.target.value)}
                 />
               </LabelInputContainer>
               <LabelInputContainer>
@@ -55,7 +55,7 @@ export function SignupForm({ type }: { type: 'Signup' | 'Signin' }) {
                   id="lastname"
                   placeholder="Lastname"
                   type="text"
-                  onChange={(e) => setLastName(e.target.value)}
+                  onChange={(e) => setLastname(e.target.value)}
                 />
               </LabelInputContainer>
             </div>
