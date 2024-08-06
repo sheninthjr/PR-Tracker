@@ -29,9 +29,9 @@ model Admin {
 
 model Repos {
   id                String   @id @default(uuid())
-  githubUrl         String
   title             String
   description       String
+  githubUrl         String
   adminId           String
   admin             Admin    @relation(fields: [adminId], references: [id])
   userPRs           UserPR[]
@@ -51,6 +51,7 @@ model UserContribution {
   id                String    @id @default(uuid())
   title             String
   description       String
+  ethAddress        String
   prType            PrType?
   prUrl             String
   userPrId          String
