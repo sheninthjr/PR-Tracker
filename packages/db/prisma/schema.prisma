@@ -52,7 +52,7 @@ model UserContribution {
   title             String
   description       String
   ethAddress        String
-  prType            PrType?
+  prType            PrType
   prUrl             String
   userPrId          String
   userPr            UserPR    @relation(fields: [userPrId], references: [id])
