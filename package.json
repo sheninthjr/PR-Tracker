@@ -27,6 +27,7 @@
     "packages/*"
   ],
   "dependencies": {
-    "@tabler/icons-react": "^3.11.0"
+    "@tabler/icons-react": "^3.11.0",
+    "recoil": "^0.7.7"
   }
 }

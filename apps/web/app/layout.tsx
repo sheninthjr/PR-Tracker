@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { Navbar } from '@/components/example/Navbar';
 import { Toaster } from '@/components/ui/toaster';
-
+import RecoilRootWrapper from '@/lib/recoilRootWrapper';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -19,9 +19,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navbar />
-        {children}
-        <Toaster />
+        <RecoilRootWrapper>
+          <Navbar />
+          {children}
+          <Toaster />
+        </RecoilRootWrapper>
       </body>
     </html>
   );

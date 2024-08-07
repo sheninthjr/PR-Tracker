@@ -4,10 +4,13 @@ import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import { LinkPrev } from './Link';
 import { cn } from '@/lib/utils';
+import { useSetRecoilState } from 'recoil';
 import axios from 'axios';
+import { user } from '../../../../packages/store/atoms/user';
 import { BACKEND_URL, FRONTEND_URL } from '@/config';
 import { BackgroundGradient } from '../ui/background-gradient';
 import { useToast } from '../ui/use-toast';
+import { useRouter } from 'next/navigation';
 
 export function SignupForm({
   type,
@@ -16,7 +19,9 @@ export function SignupForm({
   type: 'signup' | 'signin';
   userType: 'admin' | 'user';
 }) {
+  const navigate = useRouter();
   const { toast } = useToast();
+  const setUserId = useSetRecoilState(user);
   const [username, setUsername] = useState<string>('');
   const [firstname, setFirstname] = useState<string>('');
   const [lastname, setLastname] = useState<string>('');
@@ -32,11 +37,13 @@ export function SignupForm({
           password: password,
         });
         if (response.status === 200) {
+          setUserId(response.data.user.id);
           toast({
             variant: 'success',
             title: 'Logged In',
             description: 'Successfully logged into PR Tracker',
           });
+          navigate.push(`${FRONTEND_URL}/dashboard`);
         }
       } else if (type === 'signup') {
         const response = await axios.post(`${BACKEND_URL}/${userType}/signup`, {
@@ -47,11 +54,13 @@ export function SignupForm({
           password,
         });
         if (response.status === 201) {
+          setUserId(response.data.user.id);
           toast({
             variant: 'success',
             title: 'Signed Up',
             description: 'Successfully signed up to PR Tracker',
           });
+          navigate.push(`${FRONTEND_URL}/dashboard`);
         }
       }
     } catch (error: any) {
