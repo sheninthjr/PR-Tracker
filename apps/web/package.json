@@ -9,7 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@radix-ui/react-hover-card": "^1.1.1",
     "@radix-ui/react-label": "^2.1.0",
+    "@radix-ui/react-toast": "^1.2.1",
     "@tabler/icons-react": "^3.11.0",
     "@types/axios": "^0.14.0",
     "axios": "^1.7.3",
@@ -21,6 +23,7 @@
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.419.0",
     "next": "14.2.5",
+    "qss": "^3.0.0",
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^2.4.0",

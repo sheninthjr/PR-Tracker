@@ -5,7 +5,7 @@ export default function Signup() {
     <>
       <div className="flex justify-center h-screen">
         <div className="flex justify-center items-center">
-          <SignupForm type="Signup" />
+          <SignupForm type="signup" userType="user" />
         </div>
       </div>
     </>

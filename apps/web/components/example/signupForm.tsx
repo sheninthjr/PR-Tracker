@@ -2,42 +2,82 @@
 import React, { useState } from 'react';
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';
+import { LinkPrev } from './Link';
 import { cn } from '@/lib/utils';
 import axios from 'axios';
-import { BACKEND_URL } from '@/config';
+import { BACKEND_URL, FRONTEND_URL } from '@/config';
+import { BackgroundGradient } from '../ui/background-gradient';
+import { useToast } from '../ui/use-toast';
 
-export function SignupForm({ type }: { type: 'Signup' | 'Signin' }) {
+export function SignupForm({
+  type,
+  userType,
+}: {
+  type: 'signup' | 'signin';
+  userType: 'admin' | 'user';
+}) {
+  const { toast } = useToast();
   const [username, setUsername] = useState<string>('');
   const [firstname, setFirstname] = useState<string>('');
   const [lastname, setLastname] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (type === 'Signin') {
-      const response = await axios.post(`${BACKEND_URL}/admin/signin`, {
-        email: email,
-        password: password,
-      });
-    }
-    if (type === 'Signup') {
-      const response = await axios.post(`${BACKEND_URL}/admin/signup`, {
-        firstname,
-        lastname,
-        username,
-        email,
-        password,
-      });
-      alert(response);
+    try {
+      if (type === 'signin') {
+        const response = await axios.post(`${BACKEND_URL}/${userType}/signin`, {
+          email: email,
+          password: password,
+        });
+        if (response.status === 200) {
+          toast({
+            variant: 'success',
+            title: 'Logged In',
+            description: 'Successfully logged into PR Tracker',
+          });
+        }
+      } else if (type === 'signup') {
+        const response = await axios.post(`${BACKEND_URL}/${userType}/signup`, {
+          firstname,
+          lastname,
+          username,
+          email,
+          password,
+        });
+        if (response.status === 201) {
+          toast({
+            variant: 'success',
+            title: 'Signed Up',
+            description: 'Successfully signed up to PR Tracker',
+          });
+        }
+      }
+    } catch (error: any) {
+      if (error.response && error.response.status === 401) {
+        toast({
+          variant: 'destructive',
+          title: "You don't have an account",
+          description: 'Please try to sign up',
+        });
+      } else {
+        toast({
+          variant: 'destructive',
+          title: 'Error',
+          description: 'An error occurred. Please try again.',
+        });
+      }
     }
   };
+
   return (
-    <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
-      <h2 className="font-extrabold text-center text-3xl text-neutral-800 dark:text-neutral-200">
+    <BackgroundGradient className="rounded-[22px] max-w-sm p-4 sm:p-10 bg-black dark:bg-zinc-900">
+      <h2 className="font-extrabold text-center text-3xl text-white dark:text-neutral-200">
         Welcome to PR Tracker
       </h2>
       <form className="my-8" onSubmit={handleSubmit}>
-        {type === 'Signup' && (
+        {type === 'signup' && (
           <>
             <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2 mb-4">
               <LabelInputContainer>
@@ -88,15 +128,17 @@ export function SignupForm({ type }: { type: 'Signup' | 'Signin' }) {
             onChange={(e) => setPassword(e.target.value)}
           />
         </LabelInputContainer>
-        <button
-          className="bg-black block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
-          type="submit"
-        >
-          {type} &rarr;
-          <BottomGradient />
-        </button>
+        <div className="flex justify-center flex-col space-y-8 pt-4">
+          <button
+            className="inline-flex h-12 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] font-medium text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+            type="submit"
+          >
+            {type} &rarr;
+          </button>
+          <LinkPrev url={`${FRONTEND_URL}/${userType}`} type={type} />
+        </div>
       </form>
-    </div>
+    </BackgroundGradient>
   );
 }
 
