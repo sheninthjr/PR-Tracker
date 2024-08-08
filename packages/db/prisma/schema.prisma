@@ -32,6 +32,9 @@ model Repos {
   title             String
   description       String
   githubUrl         String
+  forkCount         String
+  starCount         String
+  commitCount       String
   adminId           String
   admin             Admin    @relation(fields: [adminId], references: [id])
   userPRs           UserPR[]
@@ -52,13 +55,15 @@ model UserContribution {
   title             String
   description       String
   ethAddress        String
-  prType            PrType
+  prStatus          PrStatus
+  commitsCount      String
+  filesChangedCount String
   prUrl             String
   userPrId          String
   userPr            UserPR    @relation(fields: [userPrId], references: [id])
 }
 
-enum PrType {
+enum PrStatus {
   OPENED
   CLOSED
   MERGED
