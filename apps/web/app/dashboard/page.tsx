@@ -5,6 +5,7 @@ import { useRecoilState } from 'recoil';
 
 export default function Dashboard() {
   const userId = useRecoilState(user);
+
   return (
     <>
       <Sidebar />
