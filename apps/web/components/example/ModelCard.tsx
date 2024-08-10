@@ -42,7 +42,7 @@ export function ModelCard({ onClose }: { onClose: () => void }) {
           >
             &times;
           </button>
-          <h4 className="text-xl md:text-2xl text-white font-bold text-center mb-6 text-neutral-700 dark:text-neutral-100">
+          <h4 className="text-xl md:text-2xl text-white font-bold text-center mb-6 dark:text-neutral-100">
             Enter Your Details
           </h4>
           <form className="space-y-4">
