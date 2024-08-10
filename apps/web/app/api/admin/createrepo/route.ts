@@ -4,12 +4,23 @@ import db from 'db';
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { title, description, githubUrl, adminId } = body;
+    const {
+      title,
+      description,
+      githubUrl,
+      adminId,
+      forkCount,
+      starCount,
+      commitCount,
+    } = body;
     const createRepo = await db.repos.create({
       data: {
         title,
         description,
         githubUrl,
+        forkCount,
+        starCount,
+        commitCount,
         adminId,
       },
     });

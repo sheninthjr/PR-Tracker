@@ -10,7 +10,7 @@ export const HoverEffect = ({
   className,
 }: {
   items: {
-    id: number;
+    id: string;
     title: string;
     description: string;
   }[];
@@ -19,7 +19,7 @@ export const HoverEffect = ({
   let [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const router = useRouter();
 
-  const handleCardClick = (id: number) => {
+  const handleCardClick = (id: string) => {
     router.push(`/${id}`);
   };
 
