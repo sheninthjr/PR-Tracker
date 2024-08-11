@@ -10,7 +10,7 @@ export async function POST(req: NextRequest) {
         title,
         description,
         ethAddress,
-        prType,
+        prStatus,
         prUrl,
         userPrId,
       },

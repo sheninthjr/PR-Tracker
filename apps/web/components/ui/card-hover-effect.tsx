@@ -13,6 +13,9 @@ export const HoverEffect = ({
     id: string;
     title: string;
     description: string;
+    forkCount: string;
+    starCount: string;
+    commitCount: string;
   }[];
   className?: string;
 }) => {
@@ -20,7 +23,7 @@ export const HoverEffect = ({
   const router = useRouter();
 
   const handleCardClick = (id: string) => {
-    router.push(`/${id}`);
+    router.push(`/repo/${id}`);
   };
 
   return (
@@ -58,6 +61,11 @@ export const HoverEffect = ({
           <Card>
             <CardTitle>{item.title}</CardTitle>
             <CardDescription>{item.description}</CardDescription>
+            <CardStats
+              forkCount={item.forkCount}
+              starCount={item.starCount}
+              commitCount={item.commitCount}
+            />
           </Card>
         </div>
       ))}
@@ -94,7 +102,12 @@ export const CardTitle = ({
   children: React.ReactNode;
 }) => {
   return (
-    <h4 className={cn('text-zinc-100 font-bold tracking-wide mt-4', className)}>
+    <h4
+      className={cn(
+        'text-zinc-100 font-bold text-xl tracking-wide mt-4',
+        className,
+      )}
+    >
       {children}
     </h4>
   );
@@ -116,5 +129,35 @@ export const CardDescription = ({
     >
       {children}
     </p>
+  );
+};
+
+export const CardStats = ({
+  forkCount,
+  starCount,
+  commitCount,
+}: {
+  forkCount: string;
+  starCount: string;
+  commitCount: string;
+}) => {
+  return (
+    <div className="mt-4 text-sm text-zinc-300 grid grid-rows-2 grid-cols-2 gap-2">
+      <div className="flex justify-center items-center col-span-1">
+        <button className="inline-flex h-8 animate-shimmer items-center p-2 justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] font-medium text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
+          Forks: {forkCount}
+        </button>
+      </div>
+      <div className="flex justify-center items-center col-span-1">
+        <button className="inline-flex h-8 animate-shimmer items-center p-2 justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] font-medium text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
+          Stars: {starCount}
+        </button>
+      </div>
+      <div className="row-span-1 col-span-2 flex justify-center items-center">
+        <button className="inline-flex h-8 animate-shimmer items-center p-2 justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] font-medium text-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
+          Commits: {commitCount}
+        </button>
+      </div>
+    </div>
   );
 };

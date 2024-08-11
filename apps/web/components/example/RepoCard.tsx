@@ -45,6 +45,9 @@ export function RepoCard() {
             id: project.id,
             title: project.title,
             description: project.description,
+            forkCount: project.forkCount,
+            starCount: project.starCount,
+            commitCount: project.commitCount,
           }))}
         />
       </div>
