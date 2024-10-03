@@ -1,3 +1,4 @@
+import prisma from 'db';
 import NextAuth from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
 
@@ -8,13 +9,13 @@ const handler = NextAuth({
       clientSecret: process.env.GITHUB_SECRET as string,
       authorization: {
         params: {
-          scope: 'repo',
+          scope: 'repo user:email',
         },
       },
     }),
   ],
   callbacks: {
-    async jwt({ token, account }) {
+    async jwt({ token, account, user }) {
       if (account) {
         token.accessToken = account.access_token;
       }
@@ -22,6 +23,17 @@ const handler = NextAuth({
     },
     async session({ session, token }) {
       session.accessToken = token.accessToken;
+      try {
+        await prisma.user.create({
+          data: {
+            email: session.user.email,
+            name: session.user.name,
+            image: session.user.image,
+          },
+        });
+      } catch (e) {
+        console.log('Error While Storing the user in the Database', e);
+      }
       return session;
     },
   },

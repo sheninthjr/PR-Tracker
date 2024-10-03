@@ -8,63 +8,37 @@ datasource db {
 }
 
 model User {
-  id                String    @id @default(uuid())
-  firstname         String   
-  lastname          String
-  username          String    @unique
-  email             String    @unique
-  password          String
-  userPr            UserPR[]
+  id       String           @id @default(uuid())
+  email    String           @unique
+  name     String
+  image    String
+  UserRepo UserRepository[]
 }
 
-model Admin {
-  id                String @id @default(uuid())
-  firstname         String   
-  lastname          String
-  username          String    @unique
-  email             String    @unique
-  password          String
-  repos             Repos[]
+model UserRepository {
+  id          String        @id
+  name        String
+  repoUrl     String
+  fork        Boolean
+  commitCount Int           @default(0)
+  userId      String
+  user        User          @relation(fields: [userId], references: [id])
+  pullRequest PullRequest[]
 }
 
-model Repos {
-  id                String   @id @default(uuid())
-  title             String
-  description       String
-  githubUrl         String
-  forkCount         String
-  starCount         String
-  commitCount       String
-  adminId           String
-  admin             Admin    @relation(fields: [adminId], references: [id])
-  userPRs           UserPR[]
+model PullRequest {
+  id           String         @id
+  userName     String
+  state        StateType
+  repoId       String
+  repo         UserRepository @relation(fields: [repoId], references: [id])
+  openCommit   Int            @default(0)
+  closedCommit Int            @default(0)
+  mergedCommit Int            @default(0)
 }
 
-model UserPR {
-  id                String                @id @default(uuid())
-  githubUsername    String
-  userId            String
-  user              User                  @relation(fields: [userId], references: [id])
-  repoId            String
-  repo              Repos                 @relation(fields: [repoId], references: [id])
-  userContributions UserContribution[]
-}
-
-model UserContribution {
-  id                String    @id @default(uuid())
-  title             String
-  description       String
-  ethAddress        String
-  prStatus          PrStatus
-  commitsCount      String
-  filesChangedCount String
-  prUrl             String
-  userPrId          String
-  userPr            UserPR    @relation(fields: [userPrId], references: [id])
-}
-
-enum PrStatus {
-  OPENED
+enum StateType {
+  OPEN
   CLOSED
   MERGED
 }
