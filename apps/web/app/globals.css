@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -64,6 +65,28 @@
     @apply bg-[#0D1224] text-white;
   }
 }
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #09090b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: black;
+}
+
+.scroll-smooth {
+  scroll-behavior: smooth;
+}
+
 .button-gradient {
   background: linear-gradient(90deg, #ff00a5, #7a00ff);
   color: white;
