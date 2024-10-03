@@ -11,24 +11,25 @@ export function CustomCard({ repoData }: CustomCardProps) {
       {repoData.map((repo, index) => (
         <div
           key={index}
-          className="group relative border border-transparent rounded-xl w-80 h-96 shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl"
+          className="group relative border border-transparent rounded-xl w-80 shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl"
         >
           <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-indigo-500 opacity-0 rounded-xl transition-opacity duration-500 group-hover:opacity-50"></div>
           <div className="relative z-10 bg-[#0D1224] border border-slate-700 rounded-xl p-4 shadow-md transition-transform duration-300 group-hover:translate-y-2 group-hover:shadow-lg h-full flex flex-col justify-between">
             <div className="relative">
               <Image
                 src={repo.imageUrl}
-                width={64}
-                height={64}
+                width={3840}
+                height={2160}
+                quality={100}
                 alt="Repository Image"
-                className="w-full h-32 object-cover rounded-xl transition-transform duration-500 group-hover:scale-105"
+                className="w-full h-[180px] object-cover rounded-xl transition-transform duration-500 group-hover:scale-105"
               />
               <div className="absolute top-2 right-2 bg-black text-white font-bold text-sm border border-white px-2 py-1 rounded-lg shadow-lg">
                 🌟 {repo.starCount}
               </div>
             </div>
             <div className="mt-2 text-center">
-              <h3 className="font-bold mb-2 text-xl text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500 transition-colors duration-300">
+              <h3 className="font-bold mb-2 text-xl text-white transition-colors duration-300">
                 {repo.name}
               </h3>
               <p className="text-sm text-justify text-slate-300 mt-1 group-hover:text-white transition-colors duration-300 line-clamp-3 overflow-hidden text-ellipsis">
