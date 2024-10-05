@@ -1,11 +1,15 @@
+interface Owner {
+  avatar_url: string;
+}
+
 export interface Repository {
   name: string;
   description: string;
-  imageUrl: string;
-  starCount: number;
+  image: Owner[];
+  stargazers_count: number;
   prCount: number;
-  commitCount: number;
-  tags: string[];
+  forks_count: number;
+  topics: string[];
 }
 
 export function useRepository(): Repository[] {
