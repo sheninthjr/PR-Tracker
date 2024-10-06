@@ -4,18 +4,34 @@
 
 export async function getRepository(accessToken: string) {
   try {
-    const response = await fetch('https://api.github.com/user/repos', {
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+    let allRepositories: any = [];
+    let page = 1;
 
-    if (!response.ok) {
-      throw new Error('Failed to fetch repositories');
+    while (true) {
+      const response = await fetch(
+        `https://api.github.com/user/repos?per_page=100&page=${page}`,
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error('Failed to fetch repositories');
+      }
+
+      const data = await response.json();
+      if (data.length === 0) {
+        break;
+      }
+
+      allRepositories = allRepositories.concat(data);
+      page++;
     }
 
-    const data = await response.json();
-    // for (const repo of data) {
+    // Uncomment and modify the following section if you want to store repositories in your database.
+    // for (const repo of allRepositories) {
     //   try {
     //     await prisma.userRepository.upsert({
     //       where: {
@@ -45,7 +61,8 @@ export async function getRepository(accessToken: string) {
     //     console.log('Error while storing the repository in the database', e);
     //   }
     // }
-    return data;
+
+    return allRepositories;
   } catch (e) {
     console.error('Error while fetching repository: ', e);
   }
