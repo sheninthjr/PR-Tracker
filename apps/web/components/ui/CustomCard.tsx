@@ -1,6 +1,6 @@
 import { Repository } from '@/hooks/useRepository';
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Input } from './input';
 import {
   Select,
@@ -76,7 +76,7 @@ export function CustomCard({ repoData }: CustomCardProps) {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="stars">Sort by Stars</SelectItem>
-              <SelectItem value="forks">Select Forked Repo</SelectItem>
+              <SelectItem value="forks">Select by Forked Repo</SelectItem>
               <SelectItem value="fork_count">Sort by Forks Count</SelectItem>
               <SelectItem value="commits">Sort by Commits</SelectItem>
             </SelectContent>
