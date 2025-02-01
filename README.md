@@ -1,1 +1,1 @@
-# PR Tracker for Open Source Repositories
+# PR Tracker
